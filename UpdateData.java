@@ -2,9 +2,8 @@ package com.second;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.Statement;
 
 public class UpdateData {
 
@@ -14,36 +13,30 @@ public class UpdateData {
 		String user="root";
 		String password="root";
 		try {
+		
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 			Connection con=DriverManager.getConnection(url,user,password);
-			//based on id
-			//PreparedStatement ps=con.prepareStatement("update  student set name= ? where id=?");
-			//based on age 
-			PreparedStatement ps=con.prepareStatement("update student set name=? ,id=? where age=?");
-			
-			
-			Scanner sc=new Scanner(System.in);
-			System.out.println("Enter id:");
-			int id=sc.nextInt();
-			System.out.println("Enter Ename:");
-			String name=sc.next();
-			System.out.println("Enter Age:");
-			int age=sc.nextInt();
-			
-
-			ps.setInt(1, id);
-			ps.setString(2, name);
-			ps.setInt(3, age);
-			ps.execute();
+		
+			Statement state=con.createStatement();
+			//update name based on id
+			String q="Update emp set name='Anju'where id=102";
+			state.execute(q);
+			//update 
+			String p="Update emp set name='Rani' and email='ghff@gmail.com' and salary=2000 where id=103";
+			state.execute(p);
+			//update sal based on email
+			String s="Update emp set sal=2300 where id='tanu@gmail.com'";
+			state.execute(s);
 			
 			con.close();
-			System.out.println("Data Update");
-			
-		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Table Created..");
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		
 
 	}
 
